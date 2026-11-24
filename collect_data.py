@@ -51,4 +51,4 @@ def collect_dataset(label, samples_to_collect=500, filename="data/static_dataset
     print(f"Збір даних для літери '{label}' завершено. Всього зібрано: {collected} зразків.")
 
 if __name__ == "__main__":
-    collect_dataset(label="Я", samples_to_collect=500)
+    collect_dataset(label="Е", samples_to_collect=500)

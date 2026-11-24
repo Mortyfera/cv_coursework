@@ -1,6 +1,6 @@
 import csv
 
-letters_to_remove = {"К", "П"}
+letters_to_remove = {"Б"}
 filename = "data/static_dataset.csv"
 
 with open(filename, mode="r", encoding="utf-8") as f:

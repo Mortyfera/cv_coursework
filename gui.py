@@ -23,6 +23,9 @@ class GestureRecognitionGUI(QMainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.process_frame)
 
+        self.no_hand_counter = 0
+        self.SPACE_FRAMES = 45
+
         if not self.camera.is_running:
             self.show_error("Камеру не знайдено або вона недоступна.")
             self.status_label.setText("Камера: Помилка ініціалізації")
@@ -119,6 +122,7 @@ class GestureRecognitionGUI(QMainWindow):
 
     def process_text_logic(self, symbol):
         if symbol:
+            self.no_hand_counter = 0
             if symbol == self.current_gesture:
                 self.gesture_counter += 1
                 if self.gesture_counter == self.CONFIRMATION_FRAMES:
@@ -130,6 +134,12 @@ class GestureRecognitionGUI(QMainWindow):
         else:
             self.current_gesture = None
             self.gesture_counter = 0
+            self.no_hand_counter += 1
+
+        if self.no_hand_counter == self.SPACE_FRAMES:
+            current_text = self.text_buffer.toPlainText()
+            if current_text and not current_text.endswith(" "):
+                self.text_buffer.setText(current_text + " ")
 
     def display_image(self, frame):
         rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

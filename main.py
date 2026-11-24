@@ -2,7 +2,6 @@ import sys
 import logging
 from PyQt6.QtWidgets import QApplication
 
-# Імпорт усіх незалежних модулів системи
 from videocapture import VideoCaptureModule
 from tracker import HandTracker
 from classifier import GestureClassifier
