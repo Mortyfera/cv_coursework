@@ -1,22 +1,3 @@
-"""
-Логіка роботи модуля video_capture.py
-
-Ініціалізація: Використання класу cv2.VideoCapture
-з бібліотеки OpenCV для відкриття вебкамери користувача.
-
-Зчитування кадрів: Безперервне отримання послідовності
-відеокадрів у вигляді масивів даних.
-
-Обробка помилок (FR-16): Перевірка доступності пристрою
-та коректна реакція на переривання відеопотоку (наприклад,
-якщо камеру випадково відключили під час роботи).
-
-Повернення даних: Передача захоплених кадрів до головного циклу,
-звідки вони спрямовуються до інших локальних компонентів:
-MediaPipe (для аналізу наявності руки) та PyQt (для
-відображення у графічному інтерфейсі).
-"""
-
 import cv2
 import logging
 
@@ -36,7 +17,6 @@ class VideoCaptureModule:
             cap.release()
 
         if not self.is_running:
-            import logging
             logging.error("Помилка: Не знайдено жодної підключеної та робочої камери.")
         else:
             self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -55,6 +35,6 @@ class VideoCaptureModule:
         return True, frame
 
     def release(self):
-        if self.cap.isOpened():
+        if self.cap is not None and self.cap.isOpened():
             self.cap.release()
         self.is_running = False
